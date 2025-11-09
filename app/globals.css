@@ -1,52 +1,119 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-/* --- 设计令牌（Light 默认）--- */
+/* --------------------------------------------------
+ * Design tokens for the FinOps Admin experience
+ * -------------------------------------------------- */
 @theme {
-  --radius: 0.8rem;
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius: 0.6rem;
 
-  --background: 255 255 255;
-  --foreground: 24 24 27;
-  /* ... 其他 Light 变量 ... */
-  --primary: 24 24 27;
+  --background: 248 249 250; /* #F8F9FA */
+  --foreground: 33 37 41; /* #212529 */
+
+  --primary: 0 102 255; /* #0066FF */
   --primary-foreground: 255 255 255;
-  --secondary: 244 244 245;
-  --secondary-foreground: 24 24 27;
-  --muted: 244 244 245;
-  --muted-foreground: 113 113 122;
+
+  --secondary: 255 87 51; /* #FF5733 */
+  --secondary-foreground: 255 255 255;
+
+  --muted: 233 236 239; /* #E9ECEF */
+  --muted-foreground: 108 117 125; /* #6C757D */
+
   --card: 255 255 255;
-  --card-foreground: 24 24 27;
-  --border: 228 228 231;
-  --input: 228 228 231;
-  --ring: 24 24 27;
+  --card-foreground: 33 37 41;
+
+  --border: 233 236 239; /* #E9ECEF */
+  --input: 233 236 239;
+  --ring: 0 102 255;
+
+  --success: 40 167 69; /* #28A745 */
+  --warning: 255 193 7; /* #FFC107 */
+  --error: 220 53 69; /* #DC3545 */
+  --info: 0 102 255;
+
+  --loading: 108 117 125; /* #6C757D */
+  --disabled: 206 212 218; /* #CED4DA */
 }
 
-/* 暗色覆写（next-themes 会给 html/body 加 .dark） */
+/* Dark theme overrides */
 .dark {
-  --background: 24 24 27;
-  --foreground: 250 250 250;
-  /* ... 其他 Dark 变量 ... */
-  --primary: 250 250 250;
-  --primary-foreground: 24 24 27;
-  --secondary: 39 39 42;
-  --secondary-foreground: 250 250 250;
-  --muted: 39 39 42;
-  --muted-foreground: 228 228 231;
-  --card: 24 24 27;
-  --card-foreground: 250 250 250;
-  --border: 63 63 70;
-  --input: 63 63 70;
-  --ring: 250 250 250;
+  --background: 18 20 24;
+  --foreground: 245 247 250;
+
+  --primary: 102 175 255;
+  --primary-foreground: 12 20 28;
+
+  --secondary: 255 130 94;
+  --secondary-foreground: 20 24 28;
+
+  --muted: 39 43 52;
+  --muted-foreground: 173 181 189;
+
+  --card: 24 28 34;
+  --card-foreground: 245 247 250;
+
+  --border: 54 60 69;
+  --input: 54 60 69;
+  --ring: 102 175 255;
+
+  --success: 96 200 132;
+  --warning: 255 210 90;
+  --error: 242 102 120;
+  --info: 102 175 255;
+
+  --loading: 148 158 169;
+  --disabled: 82 88 95;
 }
 
-/* 基础 */
-:root { --radius: 0.8rem; }
-html, body { height: 100%; }
+/* Base layout + typography */
+:root {
+  --radius: 0.6rem;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   background-color: rgb(var(--background));
   color: rgb(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* --- 语义工具类：v4 用 @utility 正式注册（关键！） --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: rgb(var(--foreground));
+}
+
+h1 { font-size: 2.25rem; line-height: 1.2; }
+h2 { font-size: 1.75rem; line-height: 1.3; }
+h3 { font-size: 1.5rem; line-height: 1.35; }
+
+p,
+ul,
+ol {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+small {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: rgb(var(--muted-foreground));
+}
+
+/* Utility tokens */
 @utility bg-background { background-color: rgb(var(--background)); }
 @utility text-foreground { color: rgb(var(--foreground)); }
 @utility bg-card { background-color: rgb(var(--card)); }
@@ -58,9 +125,174 @@ body {
 @utility text-muted-foreground { color: rgb(var(--muted-foreground)); }
 @utility border-border { border-color: rgb(var(--border)); }
 @utility ring-primary { --tw-ring-color: rgb(var(--ring)); }
+@utility bg-success { background-color: rgb(var(--success)); }
+@utility bg-warning { background-color: rgb(var(--warning)); }
+@utility bg-error { background-color: rgb(var(--error)); }
+@utility text-success { color: rgb(var(--success)); }
+@utility text-warning { color: rgb(var(--warning)); }
+@utility text-error { color: rgb(var(--error)); }
 
-
-/* --- 你的工程的简单辅助类（仅用原子类组合）--- */
+/* Layout helpers */
 .container { @apply mx-auto max-w-7xl px-4; }
 .card-grid { @apply grid gap-4 md:grid-cols-2 lg:grid-cols-3; }
-.sidebar-link { @apply flex items-center gap-2 rounded-2xl px-3 py-2 transition hover:bg-secondary; }
+.sidebar-link {
+  @apply flex items-center gap-2 rounded-2xl px-3 py-2 transition;
+  color: rgb(var(--muted-foreground));
+}
+.sidebar-link:hover {
+  background-color: rgb(var(--primary) / 0.08);
+  color: rgb(var(--foreground));
+}
+
+/* Button system */
+.button-base {
+  @apply inline-flex items-center justify-center gap-2 font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  border-radius: var(--radius);
+  min-height: 2.5rem;
+  padding: 0.5rem 1.25rem;
+}
+.button-primary {
+  background-color: rgb(var(--primary));
+  color: rgb(var(--primary-foreground));
+  box-shadow: 0 8px 16px rgba(0, 102, 255, 0.2);
+}
+.button-primary:hover { background-color: rgb(var(--primary) / 0.9); }
+.button-primary:active { box-shadow: 0 4px 12px rgba(0, 102, 255, 0.28); }
+
+.button-secondary {
+  background-color: rgb(var(--muted));
+  color: rgb(var(--primary));
+  border: 1px solid rgb(var(--primary) / 0.6);
+}
+.button-secondary:hover { background-color: rgb(var(--muted) / 0.9); }
+
+.button-danger {
+  background-color: rgb(var(--error));
+  color: #fff;
+  border: 1px solid rgb(var(--error) / 0.8);
+}
+.button-danger:hover { background-color: rgb(var(--error) / 0.9); }
+
+.button-sm { min-height: 1.75rem; padding: 0.25rem 0.75rem; font-size: 0.875rem; }
+.button-lg { min-height: 3rem; padding: 0.75rem 1.5rem; font-size: 1.0625rem; }
+.button-disabled {
+  background-color: rgb(var(--disabled));
+  color: rgb(var(--foreground) / 0.5);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Form controls */
+input,
+select,
+textarea {
+  @apply transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  background-color: #fff;
+  border: 1px solid rgb(var(--input));
+  border-radius: calc(var(--radius) - 0.2rem);
+  padding: 0.5rem 0.75rem;
+  color: rgb(var(--foreground));
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: rgb(var(--primary));
+  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.12);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgb(var(--muted-foreground) / 0.7);
+}
+
+/* Table styling */
+table.finops-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: rgb(var(--card));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+table.finops-table thead tr {
+  background-color: rgb(var(--muted));
+  color: rgb(var(--foreground));
+  font-weight: 600;
+}
+
+table.finops-table th,
+table.finops-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgb(var(--border));
+  text-align: left;
+}
+
+table.finops-table tbody tr:nth-child(even) {
+  background-color: rgb(var(--background));
+}
+
+table.finops-table tbody tr:hover {
+  background-color: rgb(var(--primary) / 0.06);
+  box-shadow: inset 0 0 0 1px rgb(var(--primary) / 0.1);
+}
+
+/* Card styling */
+.finops-card {
+  background: rgb(var(--card));
+  color: rgb(var(--card-foreground));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  padding: 1.5rem;
+}
+
+.finops-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.finops-card small {
+  display: block;
+}
+
+/* Feedback states */
+.status-pill {
+  @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-medium;
+  background-color: rgb(var(--muted) / 0.6);
+  color: rgb(var(--foreground));
+}
+.status-pill.success { background-color: rgb(var(--success) / 0.12); color: rgb(var(--success)); }
+.status-pill.warning { background-color: rgb(var(--warning) / 0.2); color: rgb(var(--warning)); }
+.status-pill.error { background-color: rgb(var(--error) / 0.18); color: rgb(var(--error)); }
+
+/* Loading indicators */
+.loading-dots::after {
+  content: "";
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  border: 3px solid rgb(var(--loading) / 0.2);
+  border-top-color: rgb(var(--loading));
+  animation: spin 0.75s linear infinite;
+  margin-left: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive helpers */
+@media (max-width: 768px) {
+  .card-grid { @apply grid-cols-1; }
+  table.finops-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
