@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/* --- 设计令牌（Light 默认）--- */
+@theme {
+  --radius: 0.8rem;
+
+  --background: 255 255 255;
+  --foreground: 24 24 27;
+  /* ... 其他 Light 变量 ... */
+  --primary: 24 24 27;
+  --primary-foreground: 255 255 255;
+  --secondary: 244 244 245;
+  --secondary-foreground: 24 24 27;
+  --muted: 244 244 245;
+  --muted-foreground: 113 113 122;
+  --card: 255 255 255;
+  --card-foreground: 24 24 27;
+  --border: 228 228 231;
+  --input: 228 228 231;
+  --ring: 24 24 27;
+}
+
+/* 暗色覆写（next-themes 会给 html/body 加 .dark） */
+.dark {
+  --background: 24 24 27;
+  --foreground: 250 250 250;
+  /* ... 其他 Dark 变量 ... */
+  --primary: 250 250 250;
+  --primary-foreground: 24 24 27;
+  --secondary: 39 39 42;
+  --secondary-foreground: 250 250 250;
+  --muted: 39 39 42;
+  --muted-foreground: 228 228 231;
+  --card: 24 24 27;
+  --card-foreground: 250 250 250;
+  --border: 63 63 70;
+  --input: 63 63 70;
+  --ring: 250 250 250;
+}
+
+/* 基础 */
+:root { --radius: 0.8rem; }
+html, body { height: 100%; }
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+}
+
+/* --- 语义工具类：v4 用 @utility 正式注册（关键！） --- */
+@utility bg-background { background-color: rgb(var(--background)); }
+@utility text-foreground { color: rgb(var(--foreground)); }
+@utility bg-card { background-color: rgb(var(--card)); }
+@utility text-card-foreground { color: rgb(var(--card-foreground)); }
+@utility bg-secondary { background-color: rgb(var(--secondary)); }
+@utility text-secondary-foreground { color: rgb(var(--secondary-foreground)); }
+@utility bg-primary { background-color: rgb(var(--primary)); }
+@utility text-primary-foreground { color: rgb(var(--primary-foreground)); }
+@utility text-muted-foreground { color: rgb(var(--muted-foreground)); }
+@utility border-border { border-color: rgb(var(--border)); }
+@utility ring-primary { --tw-ring-color: rgb(var(--ring)); }
+
+
+/* --- 你的工程的简单辅助类（仅用原子类组合）--- */
+.container { @apply mx-auto max-w-7xl px-4; }
+.card-grid { @apply grid gap-4 md:grid-cols-2 lg:grid-cols-3; }
+.sidebar-link { @apply flex items-center gap-2 rounded-2xl px-3 py-2 transition hover:bg-secondary; }
